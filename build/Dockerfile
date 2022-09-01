@@ -1,5 +1,13 @@
+FROM golang:alpine as builder
+
+WORKDIR /build
+
+COPY . .
+
+RUN go build -o tictactoe cmd/main.go
+
 FROM alpine
 
-COPY bin/app .
+COPY --from=builder /build/tictactoe .
 
-CMD "/app"
+CMD "./tictactoe"

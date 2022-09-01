@@ -4,11 +4,8 @@ VERSION=$$(git rev-parse --short=10 HEAD)
 run:
 	go run cmd/main.go
 
-bin:
-	mkdir bin
-
-bin/app: bin
-	go build -o bin/app cmd/main.go
-
-container: bin/app
+container:
 	docker build -f build/Dockerfile . -t $(PROJECT):$(VERSION)
+
+container-run: container
+	docker run -it --rm $(PROJECT):$(VERSION)
