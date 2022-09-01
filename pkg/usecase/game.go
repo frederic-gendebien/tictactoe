@@ -23,10 +23,12 @@ func (g *Game) Play(intrface interfaces.Interface) {
 	for {
 		currentPlayer := g.nextPlayer()
 		correctPlay := false
+
+		intrface.ShowGrid(g.grid)
 		for !correctPlay {
-			intrface.ShowGrid(g.grid)
 			if err := currentPlayer.Play(intrface.AskCoordinatesTo, g.grid); err != nil {
 				intrface.Slap(currentPlayer, err)
+				intrface.ShowGrid(g.grid)
 			} else {
 				correctPlay = true
 			}
